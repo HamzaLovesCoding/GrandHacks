@@ -21,8 +21,11 @@ export const bar = {
   menu: "Menu",
   dialog: "Navigation",
   register: "Register",
-  // The mark in the bar. Nine options live in public/logos (logo-1.png to logo-9.png).
-  logo: "/logos/logo-1.png",
+  // The mark in the bar. Nine options live in public/logos: logo-N.png is the mark's colour,
+  // and logo-N-mono.png (logos 1 and 2 only) its white parts, which the bar tints to its text colour
+  // so they show on light bars too. Use "" for mono when a logo has none.
+  // Whole logos with the wordmark, cut out, are in public/logos/full (the -light ones are for light backgrounds).
+  logo: { color: "/logos/logo-1.png", mono: "/logos/logo-1-mono.png" },
 };
 
 /* ---------- About ---------- */

@@ -199,16 +199,44 @@ header.compact {
   align-items: center;
   gap: 8px;
 }
-.logo > svg,
-.logo > .barLogo {
+.logo > svg {
   width: 40px;
   height: 30px;
   background: var(--ink);
   border-radius: 4px;
   padding: 2px;
 }
+/* The organizers' logo, cut out so it sits straight on the bar. Its white parts are a mask
+   filled with the bar's own text colour, so they read on the light bars and fade with them. */
 .logo > .barLogo {
-  object-fit: contain;
+  position: relative;
+  display: block;
+  height: 32px;
+  line-height: 0;
+  transition: transform 0.2s;
+}
+.barLogo img {
+  display: block;
+  height: 100%;
+  width: auto;
+}
+.barLogoMono {
+  position: absolute;
+  inset: 0;
+  background: currentColor;
+  mask-size: 100% 100%;
+  -webkit-mask-size: 100% 100%;
+}
+.logo:hover > .barLogo {
+  transform: rotate(-4deg) scale(1.06);
+}
+@media (prefers-reduced-motion: reduce) {
+  .logo > .barLogo {
+    transition: none;
+  }
+  .logo:hover > .barLogo {
+    transform: none;
+  }
 }
 .logo strong {
   font: 700 17px/1 DM, Arial, sans-serif;
@@ -838,10 +866,12 @@ dialog[data-closing] {
   header nav {
     display: none;
   }
-  .logo > svg,
-  .logo > .barLogo {
+  .logo > svg {
     width: 36px;
     height: 27px;
+  }
+  .logo > .barLogo {
+    height: 28px;
   }
   .logo strong {
     font-size: 16px;

@@ -30,7 +30,15 @@ const modified = (e: React.MouseEvent) => e.metaKey || e.ctrlKey || e.shiftKey |
 function Brand({ expanded = false }: { expanded?: boolean }) {
   return (
     <>
-      <img className="barLogo" src={bar.logo} alt="" />
+      <span className="barLogo">
+        <img src={bar.logo.color} alt="" />
+        {bar.logo.mono && (
+          <span
+            className="barLogoMono"
+            style={{ maskImage: `url(${bar.logo.mono})`, WebkitMaskImage: `url(${bar.logo.mono})` }}
+          />
+        )}
+      </span>
       {expanded ? (
         <strong>{bar.brand}</strong>
       ) : (
