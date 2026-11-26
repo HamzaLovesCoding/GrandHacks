@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Foot } from "./components/foot";
 import { blankDraft, MessageForm, type Draft } from "./components/message-form";
-import { Mark, Pixel } from "./components/pixel";
+import { Pixel } from "./components/pixel";
 import { About } from "./sections/about";
 import { FAQ } from "./sections/faq";
 import "./sections/finale.css";
@@ -30,7 +30,7 @@ const modified = (e: React.MouseEvent) => e.metaKey || e.ctrlKey || e.shiftKey |
 function Brand({ expanded = false }: { expanded?: boolean }) {
   return (
     <>
-      <Mark />
+      <img className="barLogo" src={bar.logo} alt="" />
       {expanded ? (
         <strong>{bar.brand}</strong>
       ) : (

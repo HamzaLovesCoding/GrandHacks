@@ -21,6 +21,8 @@ export const bar = {
   menu: "Menu",
   dialog: "Navigation",
   register: "Register",
+  // The mark in the bar. Nine options live in public/logos (logo-1.png to logo-9.png).
+  logo: "/logos/logo-1.png",
 };
 
 /* ---------- About ---------- */

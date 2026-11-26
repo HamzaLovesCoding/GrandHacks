@@ -199,12 +199,16 @@ header.compact {
   align-items: center;
   gap: 8px;
 }
-.logo > svg {
+.logo > svg,
+.logo > .barLogo {
   width: 40px;
   height: 30px;
   background: var(--ink);
   border-radius: 4px;
   padding: 2px;
+}
+.logo > .barLogo {
+  object-fit: contain;
 }
 .logo strong {
   font: 700 17px/1 DM, Arial, sans-serif;
@@ -834,7 +838,8 @@ dialog[data-closing] {
   header nav {
     display: none;
   }
-  .logo > svg {
+  .logo > svg,
+  .logo > .barLogo {
     width: 36px;
     height: 27px;
   }
