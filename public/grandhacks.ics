@@ -1,0 +1,18 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//GrandHacks//Overnight//EN
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+UID:grandhacks-2027@grandhacks
+DTSTAMP:20261125T000000Z
+SEQUENCE:1
+DTSTART:20270619T153000Z
+DTEND:20270620T200000Z
+SUMMARY:GrandHacks (reminder, not registered)
+LOCATION:San Francisco, venue to be announced
+DESCRIPTION:A calendar reminder. It does not register you. Registration will
+  be on Luma.
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+END:VCALENDAR

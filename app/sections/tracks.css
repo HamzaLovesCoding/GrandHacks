@@ -1,0 +1,197 @@
+/* At least a screen tall: a compact heading, then eight even rows with the preview beside them. */
+.tracks {
+  --rule: rgb(251 244 230 / 0.26);
+  min-height: 100svh;
+  padding-block: clamp(84px, 11svh, 112px) clamp(36px, 5svh, 56px);
+}
+.tracksGrid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-rows: auto 1fr;
+  column-gap: var(--gap);
+  min-height: calc(100svh - clamp(84px, 11svh, 112px) - clamp(36px, 5svh, 56px));
+}
+.tracksHead {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 12px;
+  padding-bottom: clamp(20px, 3svh, 32px);
+}
+.tracksHead .head {
+  font-size: clamp(32px, 3.3vw, 58px);
+}
+.tracksTheme {
+  max-width: 62em;
+  font-size: clamp(16px, 1.1vw, 20px);
+  line-height: 1.45;
+}
+.tracksTheme small {
+  display: inline-block;
+  margin-right: 8px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: var(--gold);
+  color: var(--ink);
+  font-size: 12px;
+  vertical-align: 2px;
+}
+.tracksTheme strong {
+  /* drops under the label in one piece on a phone */
+  display: inline-block;
+  font-weight: 600;
+}
+.trackRows {
+  grid-column: 1 / span 7;
+  grid-row: 2;
+  display: grid;
+  grid-template-rows: repeat(8, minmax(88px, 1fr));
+  border-top: 1px solid var(--rule);
+}
+.trackRow {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2.6em 40px minmax(7.5em, 0.9fr) minmax(0, 1.3fr);
+  align-items: center;
+  gap: 0 18px;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--rule);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.trackRow input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.trackNum {
+  font: 18px/1 var(--pixel);
+  color: rgb(251 244 230 / 0.6);
+}
+.trackIcon {
+  width: 36px;
+  height: 36px;
+  color: var(--pale);
+}
+.trackRow strong {
+  font-size: clamp(22px, 1.9vw, 32px);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+}
+.trackLine {
+  font-size: clamp(15px, 1vw, 18px);
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: rgb(251 244 230 / 0.84);
+}
+.trackRow:hover,
+.trackRow:has(input:checked) {
+  background: rgb(251 244 230 / 0.07);
+}
+.trackRow:has(input:checked):before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -1px;
+  bottom: -1px;
+  width: 4px;
+  background: var(--gold);
+}
+.trackRow:has(input:checked) strong,
+.trackRow:has(input:checked) .trackNum {
+  color: var(--gold);
+}
+.trackRow:has(input:focus-visible) {
+  outline: 3px solid var(--cream);
+  outline-offset: -3px;
+}
+.trackPeek {
+  grid-column: 8 / -1;
+  grid-row: 2;
+}
+.peekCard {
+  position: sticky;
+  top: 84px;
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: 14px;
+  min-height: min(560px, 100%);
+  padding: clamp(24px, 3vw, 52px);
+  border: 1px solid var(--rule);
+  border-radius: 18px;
+  background: rgb(8 24 30 / 0.34);
+  animation: peek-in 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+@keyframes peek-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+.peekIcon {
+  --px-on: var(--cream);
+  width: min(13vw, 190px);
+  aspect-ratio: 1;
+  margin-bottom: 10px;
+  color: var(--gold);
+}
+.peekCard strong {
+  font-size: clamp(30px, 3vw, 52px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+.peekCard p {
+  max-width: 20em;
+  font-size: clamp(18px, 1.3vw, 24px);
+  line-height: 1.35;
+}
+.peekCard small {
+  color: var(--pale);
+}
+@media (max-width: 900px) {
+  .tracksGrid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+    min-height: 0;
+  }
+  .tracksHead,
+  .trackRows {
+    grid-column: 1;
+    grid-row: auto;
+  }
+  .trackRows {
+    grid-template-rows: none;
+  }
+  .trackRow {
+    grid-template-columns: 32px minmax(0, 1fr);
+    grid-template-areas:
+      "icon name"
+      "icon line";
+    align-items: start;
+    gap: 4px 14px;
+    min-height: 76px;
+    padding: 16px 8px;
+  }
+  .trackNum,
+  .trackPeek {
+    display: none;
+  }
+  .trackIcon {
+    grid-area: icon;
+    width: 30px;
+    height: 30px;
+    margin-top: 2px;
+  }
+  .trackRow strong {
+    grid-area: name;
+    font-size: 22px;
+  }
+  .trackLine {
+    grid-area: line;
+    font-size: 15px;
+  }
+}

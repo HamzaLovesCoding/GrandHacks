@@ -1,0 +1,576 @@
+/* /parents: the home page's palette and type, with calmer motion. Everything is namespaced, because
+   this stylesheet loads on the home page too. */
+.parentsPage {
+  --parents-soft: rgb(20 16 11 / 0.72);
+  --parents-line: rgb(20 16 11 / 0.24);
+  min-height: 100svh;
+  padding-bottom: clamp(72px, 12svh, 128px);
+}
+.parentsGrid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  align-items: start;
+  gap: clamp(48px, 8svh, 88px) var(--gap);
+}
+
+/* ---------- What it is, and the facts at a glance ---------- */
+.parentsHead {
+  grid-column: 1 / span 7;
+  align-self: center;
+  display: grid;
+  justify-items: start;
+  gap: 18px;
+}
+.parentsHead small {
+  color: var(--parents-soft);
+}
+.parentsHead .lead {
+  max-width: 22em;
+}
+.parentsHead .text {
+  max-width: 33em;
+}
+.parentsGlance {
+  grid-column: 9 / -1;
+  display: grid;
+  gap: 16px;
+}
+/* The facts as a travel poster: the painting, the date across its sky and the rest over its water.
+   It opens at night and the sun comes up on it. Pointing at it brings the night back. */
+.poster {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  aspect-ratio: 5 / 7.1;
+  border: clamp(8px, 0.7vw, 12px) solid var(--cream);
+  background: var(--deep-sky);
+  color: var(--cream);
+  box-shadow:
+    0 1px 2px rgb(20 16 11 / 0.3),
+    0 34px 50px -34px rgb(20 16 11 / 0.7);
+}
+.poster img {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 34% 64%;
+}
+.posterNight img {
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 1.1s ease-in-out;
+}
+/* shade behind the words at the top and bottom, over both paintings */
+.poster:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    rgb(9 40 48 / 0.45),
+    transparent 27%,
+    transparent 54%,
+    rgb(8 28 38 / 0.84) 74%,
+    rgb(8 24 32 / 0.94)
+  );
+}
+.poster dl {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  grid-template-rows: auto 1fr auto auto;
+  column-gap: 16px;
+  height: 100%;
+  margin: 0;
+  padding: clamp(18px, 1.6vw, 30px);
+}
+.poster dl > div:nth-child(-n + 2) {
+  grid-column: 1 / -1;
+}
+.poster dl > div:first-child {
+  text-align: center;
+}
+.poster dl > div:nth-child(2) {
+  grid-row: 3;
+}
+.poster dl > div:nth-child(n + 3) {
+  grid-row: 4;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgb(251 244 230 / 0.35);
+}
+.poster dt {
+  margin-bottom: 2px;
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.poster dd {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.35;
+  text-wrap: balance;
+}
+.poster strong {
+  font: 700 clamp(20px, 1.4vw, 27px) / 1.05 var(--display);
+  letter-spacing: -0.005em;
+}
+.poster dl > div:nth-child(2) strong {
+  font-size: clamp(34px, 3vw, 54px);
+}
+.poster .posterDate {
+  margin-bottom: 4px;
+  font-size: clamp(64px, 5.9vw, 112px);
+  line-height: 0.86;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+.parentsTools small {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--parents-soft);
+}
+.parentsPending {
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--parents-soft);
+  text-wrap: pretty;
+}
+@media (hover: hover) {
+  .poster:hover .posterNight img {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .posterNight img {
+    animation: poster-dawn 2.6s 0.5s ease-in-out backwards;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .posterNight img {
+    transition: none;
+  }
+}
+@keyframes poster-dawn {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .parentsHead > *,
+  .parentsGlance {
+    animation: parents-in 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  .parentsHead > :nth-child(2) {
+    animation-delay: 0.06s;
+  }
+  .parentsHead > :nth-child(3) {
+    animation-delay: 0.12s;
+  }
+  .parentsHead > :nth-child(4),
+  .parentsGlance {
+    animation-delay: 0.18s;
+  }
+}
+@keyframes parents-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+/* ---------- The guide: search and topics on the left, the questions on the right ---------- */
+.parentsGuide {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  align-items: start;
+  gap: 28px var(--gap);
+}
+.parentsTools {
+  grid-column: 1 / span 4;
+  display: grid;
+  gap: 10px;
+}
+@media (min-width: 1101px) and (min-height: 620px) {
+  .parentsTools {
+    position: sticky;
+    top: 88px;
+  }
+}
+.parentsSearch {
+  display: grid;
+  gap: 8px;
+}
+.parentsField {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.parentsField svg {
+  position: absolute;
+  left: 20px;
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+}
+.parentsField input {
+  width: 100%;
+  min-height: 56px;
+  padding: 0 52px 0 50px;
+  border: 2px solid var(--ink);
+  border-radius: 100px;
+  background: var(--cream);
+  color: var(--ink);
+  font: 500 18px/1.2 DM, Arial, sans-serif;
+  letter-spacing: -0.015em;
+  text-overflow: ellipsis;
+  appearance: none;
+}
+/* no clear button while it's empty, so the hint gets that room */
+.parentsField input:placeholder-shown {
+  padding-right: 20px;
+}
+.parentsField input::placeholder {
+  color: var(--parents-soft);
+  opacity: 1;
+}
+.parentsField input::-webkit-search-cancel-button {
+  display: none;
+}
+.parentsClear {
+  position: absolute;
+  right: 8px;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 24px;
+  line-height: 1;
+  transition: background-color 0.15s;
+}
+.parentsClear:hover {
+  background: rgb(20 16 11 / 0.08);
+}
+.parentsClear:focus-visible {
+  outline-offset: 0;
+}
+.parentsCount {
+  min-height: 1.4em;
+  margin-bottom: 14px;
+  padding-left: 4px;
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--parents-soft);
+}
+.parentsChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.parentsChips button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 16px;
+  border: 1.5px solid rgb(20 16 11 / 0.5);
+  border-radius: 100px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  transition:
+    background-color 0.15s,
+    border-color 0.15s,
+    color 0.15s;
+}
+.parentsChips button:hover {
+  border-color: var(--ink);
+  background: rgb(251 244 230 / 0.6);
+}
+/* the chosen topic: filled in ink, with an amber dot */
+.parentsChips [aria-pressed="true"],
+.parentsChips [aria-pressed="true"]:hover {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--cream);
+}
+/* the focus ring stays ink, even on a chosen (ink) chip */
+.parentsChips button:focus-visible {
+  outline-color: var(--ink);
+}
+.parentsChips [aria-pressed="true"]:before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+/* ---------- The questions ---------- */
+.parentsList {
+  grid-column: 6 / -1;
+  display: grid;
+  gap: clamp(36px, 5svh, 56px);
+  scroll-margin-top: 24px;
+}
+.parentsTopic h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 14px;
+  font: 14px/1.2 var(--mono);
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+}
+.parentsTopic h2 svg {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  color: var(--deep);
+}
+.parentsTopic ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--parents-line);
+}
+.parentsAsk {
+  border-bottom: 1px solid var(--parents-line);
+  scroll-margin-top: 16px;
+}
+.parentsAsk h3 {
+  font: inherit;
+}
+.parentsAsk h3 button {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px 0;
+  text-align: left;
+  font-size: clamp(19px, 1.55vw, 25px);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.018em;
+}
+/* a plus in a ring that turns into a minus on amber */
+.parentsAsk h3 button:after {
+  content: "";
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  background:
+    linear-gradient(currentColor, currentColor) center / 12px 2px no-repeat,
+    linear-gradient(currentColor, currentColor) center / 2px 12px no-repeat;
+  transition:
+    background-size 0.2s,
+    background-color 0.2s;
+}
+.parentsAsk h3 button:hover:after {
+  background-color: var(--cream);
+}
+.parentsAsk[data-open] h3 button:after {
+  background-color: var(--gold);
+  background-size:
+    12px 2px,
+    2px 0;
+}
+.parentsAsk mark {
+  padding: 0 0.06em;
+  border-radius: 3px;
+  background: var(--pale);
+  color: inherit;
+}
+/* Answers fold open by growing their row from nothing to their own height. */
+.parentsAnswer {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.32s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.parentsAsk[data-open] .parentsAnswer {
+  grid-template-rows: 1fr;
+}
+.parentsAnswer > div {
+  min-height: 0;
+  overflow: hidden;
+  /* room for focus rings on either side */
+  margin-inline: -10px;
+  padding-inline: 10px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.parentsAsk[data-open] .parentsAnswer > div {
+  opacity: 1;
+  transition: opacity 0.32s 0.06s;
+}
+.parentsAnswer p {
+  max-width: 36em;
+  padding-right: 54px;
+  text-wrap: pretty;
+}
+.parentsTopic .parentsPoints {
+  display: grid;
+  gap: 8px;
+  max-width: 36em;
+  margin-top: 12px;
+  padding-right: 54px;
+  border: 0;
+}
+.parentsPoints li {
+  position: relative;
+  padding-left: 22px;
+  text-wrap: pretty;
+}
+.parentsPoints li:before {
+  content: "";
+  position: absolute;
+  top: 0.7em;
+  left: 0;
+  width: 12px;
+  height: 2px;
+  background: var(--deep);
+}
+/* what the organizers haven't settled, kept apart from the answer */
+.parentsAnswer .parentsTbc {
+  margin-top: 12px;
+  font-size: 0.88em;
+  color: var(--parents-soft);
+}
+.parentsTbc b {
+  font-weight: 600;
+  color: var(--ink);
+}
+.parentsAnswer > div > :last-child {
+  margin-bottom: 24px;
+}
+.parentsAnswer .textLink {
+  margin-top: 6px;
+}
+.parentsEmpty {
+  display: grid;
+  justify-items: start;
+  gap: 12px;
+  padding: clamp(24px, 3vw, 40px);
+  border: 1.5px dashed rgb(20 16 11 / 0.45);
+  border-radius: 20px;
+}
+
+/* ---------- Anything else ---------- */
+.parentsContact {
+  position: relative;
+  grid-column: 1 / -1;
+  display: grid;
+  justify-items: start;
+  gap: 14px;
+  padding: clamp(28px, 4vw, 56px);
+  border-radius: 20px;
+  background: var(--cream);
+}
+.parentsContact .text {
+  max-width: 30em;
+}
+.parentsContactIcon {
+  position: absolute;
+  top: clamp(28px, 4vw, 56px);
+  right: clamp(28px, 4vw, 56px);
+  width: clamp(56px, 6vw, 88px);
+  height: auto;
+  aspect-ratio: 11 / 7;
+  color: var(--gold);
+}
+
+/* Below 1100px everything stacks: the poster turns on its side (then back on a phone), and the search and topics sit above
+   the questions instead of beside them. */
+@media (max-width: 1100px) {
+  .parentsHead,
+  .parentsGlance,
+  .parentsTools,
+  .parentsList {
+    grid-column: 1 / -1;
+  }
+  .parentsGuide {
+    gap: 36px var(--gap);
+  }
+  .parentsTools {
+    max-width: 720px;
+  }
+}
+@media (min-width: 601px) and (max-width: 1100px) {
+  .poster {
+    aspect-ratio: 16 / 9.6;
+  }
+  .poster img {
+    object-position: 50% 40%;
+  }
+  .poster dl {
+    grid-template-columns: 1.1fr 1.2fr 1fr;
+    grid-template-rows: 1fr auto;
+  }
+  .poster dl > div:first-child {
+    justify-self: end;
+    grid-column: 1 / -1;
+  }
+  .poster dl > div:nth-child(n + 2) {
+    grid-row: 2;
+    grid-column: auto;
+    align-self: end;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+  .poster dl > div:nth-child(n + 2) strong {
+    font-size: clamp(24px, 3.2vw, 34px);
+  }
+  .poster .posterDate {
+    font-size: clamp(64px, 9.4vw, 100px);
+  }
+}
+@media (max-width: 600px) {
+  .poster img {
+    object-position: 34% 64%;
+  }
+  .poster .posterDate {
+    font-size: min(19vw, 84px);
+  }
+  /* one row of topics you swipe through, running out to the edges of the screen */
+  .parentsChips {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin-inline: calc(-1 * var(--margin));
+    padding: 8px var(--margin);
+    scroll-padding-inline: var(--margin);
+    scrollbar-width: none;
+    /* the fade at the right edge says there are more topics to swipe to */
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 48px), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - 48px), transparent);
+  }
+  .parentsChips::-webkit-scrollbar {
+    display: none;
+  }
+  .parentsChips button {
+    flex: none;
+  }
+  .parentsAnswer p,
+  .parentsTopic .parentsPoints {
+    padding-right: 0;
+  }
+  .parentsContactIcon {
+    display: none;
+  }
+}

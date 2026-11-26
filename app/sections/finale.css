@@ -1,0 +1,44 @@
+.finale {
+  color: var(--cream);
+  background: #121416;
+}
+.finale :focus-visible {
+  outline-color: var(--cream);
+}
+/* ---------- The footer rows ---------- */
+.foot {
+  padding-block: 36px 40px;
+  display: grid;
+  gap: 32px;
+}
+.foot dl {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 20px var(--gap);
+  margin: 0;
+}
+.foot dt {
+  font-weight: 600;
+}
+.foot dd {
+  margin: 2px 0 0;
+  font-size: 0.84em;
+  color: rgb(251 244 230 / 0.74);
+}
+.foot a,
+.footLink {
+  /* a 44px-tall target without moving the text */
+  display: inline-block;
+  padding-block: 12px;
+  margin-block: -12px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.foot > .small {
+  color: rgb(251 244 230 / 0.74);
+}
+@media (max-width: 900px) {
+  .foot dl {
+    grid-template-columns: 1fr 1fr;
+  }
+}

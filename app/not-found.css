@@ -1,0 +1,25 @@
+.lost {
+  min-height: 100svh;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 18px;
+  padding: 24px var(--margin);
+  text-align: center;
+  color: var(--ink);
+  background: url("/media/canvas.webp") 0 0 / 96px var(--fog);
+  font: 400 18px/1.5 DM, Arial, sans-serif;
+  letter-spacing: -0.006em;
+}
+.lostCode {
+  font: 700 min(38vw, 260px) / 0.8 var(--display);
+  letter-spacing: -0.02em;
+  color: var(--gold);
+}
+.lost h1 {
+  font: 600 clamp(28px, 4vw, 48px) / 1.1 DM, Arial, sans-serif;
+  letter-spacing: -0.04em;
+}
+.lost .btn {
+  margin-top: 8px;
+}

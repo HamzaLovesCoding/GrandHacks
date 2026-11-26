@@ -1,0 +1,248 @@
+.prizes {
+  /* the podium and the award list share this height and one floor line */
+  --stage: clamp(260px, 34svh, 360px);
+  --floor: rgb(251 244 230 / 0.32);
+  --rule: rgb(251 244 230 / 0.14);
+  --soft: rgb(251 244 230 / 0.72);
+  background: url("/media/canvas.webp") 0 0 / 96px var(--graphite);
+}
+.prizesGrid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap);
+}
+
+/* ---------- Headline ---------- */
+.prizesHead {
+  grid-column: 1 / span 8;
+  display: grid;
+  justify-items: start;
+  gap: clamp(14px, 2svh, 22px);
+}
+.prizes .beat {
+  font-size: min(7.6vw, 13svh, 150px);
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+.prizesHead .text {
+  color: rgb(251 244 230 / 0.84);
+}
+.prizesExample {
+  padding: 6px 12px;
+  border: 1px dashed rgb(246 223 164 / 0.6);
+  border-radius: 100px;
+  color: var(--pale);
+  font-size: 14px;
+  line-height: 1.3;
+}
+
+/* ---------- The two kinds of award ---------- */
+.prizesTop,
+.prizesAwards {
+  display: grid;
+  align-content: start;
+  gap: 18px;
+  margin-top: clamp(40px, 7svh, 72px);
+}
+.prizesTop {
+  grid-column: 1 / span 6;
+}
+.prizesAwards {
+  grid-column: 8 / -1;
+}
+.prizesLabel,
+.prizesTotal span {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--soft);
+}
+
+/* Second, first, third, standing on one floor. First is the only gold. */
+.podium {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: end;
+  gap: 10px;
+  height: var(--stage);
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  list-style: none;
+  border-bottom: 2px solid var(--floor);
+  view-timeline: --podium;
+}
+.podium li {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+  height: var(--h);
+  padding: clamp(14px, 1.3vw, 22px);
+  border-radius: 10px 10px 0 0;
+}
+.podiumNum {
+  font: 700 clamp(56px, 5vw, 96px) / 0.8 var(--display);
+}
+.podiumWin {
+  display: grid;
+  gap: 6px;
+  font-size: clamp(14px, 1vw, 17px);
+  font-weight: 600;
+  line-height: 1.2;
+}
+.podiumWin strong,
+.awardPrize {
+  font: 700 clamp(30px, 2.7vw, 48px) / 0.9 var(--display);
+  letter-spacing: -0.01em;
+}
+.podium [data-place="1"] {
+  order: 2;
+  --h: 100%;
+  background: var(--gold);
+  color: var(--ink);
+}
+.podium [data-place="2"] {
+  order: 1;
+  --h: 80%;
+  background: rgb(251 244 230 / 0.13);
+}
+.podium [data-place="3"] {
+  order: 3;
+  --h: 64%;
+  background: rgb(251 244 230 / 0.07);
+}
+/* The blocks rise out of the floor as the podium scrolls in, second, then first, then third. They're
+   all up by the time the whole podium is on screen, so a jump straight to the section never catches
+   them halfway. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .podium li {
+      animation: rise linear both;
+      animation-timeline: --podium;
+      animation-range: entry 0% entry 80%;
+    }
+    .podium [data-place="1"] {
+      animation-range: entry 10% entry 90%;
+    }
+    .podium [data-place="3"] {
+      animation-range: entry 20% entry 100%;
+    }
+  }
+}
+@keyframes rise {
+  from {
+    translate: 0 101%;
+  }
+}
+
+/* The category awards: three rows, prize on the right, filling the podium's height. */
+.awardList {
+  display: grid;
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  height: var(--stage);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--rule);
+  border-bottom: 2px solid var(--floor);
+}
+.awardList li {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: 18px;
+}
+.awardList li + li {
+  border-top: 1px solid var(--rule);
+}
+.awardIcon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: var(--gold);
+  color: var(--ink);
+}
+.awardIcon svg {
+  width: 28px;
+  height: 28px;
+}
+.awardList h4 {
+  margin: 0;
+  font-size: clamp(19px, 1.5vw, 26px);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+.awardList p {
+  margin-top: 4px;
+  font-size: clamp(14px, 1vw, 17px);
+  line-height: 1.35;
+  color: var(--soft);
+}
+.awardPrize {
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+/* ---------- The total, right under the column of prizes it adds up, like the last line of a bill ---------- */
+.prizesTotal {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: baseline;
+  gap: 8px 24px;
+  margin-top: clamp(20px, 3svh, 32px);
+}
+.prizesTotal strong {
+  font: 700 min(6.4vw, 11svh, 128px) / 0.84 var(--display);
+  letter-spacing: -0.02em;
+  color: var(--gold);
+}
+
+@media (max-width: 900px) {
+  .prizes {
+    --stage: clamp(250px, 36svh, 300px);
+  }
+  .prizesHead,
+  .prizesTop,
+  .prizesAwards {
+    grid-column: 1 / -1;
+  }
+  .awardList {
+    height: auto;
+    grid-template-rows: none;
+  }
+  .awardList li {
+    padding-block: 18px;
+  }
+}
+@media (max-width: 720px) {
+  .prizes .beat,
+  .prizesTotal strong {
+    font-size: 15.5vw;
+  }
+  .prizes .beat {
+    white-space: normal;
+  }
+  /* each prize fits its block, down to a 320px phone */
+  .podium li {
+    padding: 14px 12px;
+  }
+  .podiumWin strong {
+    font-size: min(6.5vw, 30px);
+  }
+  .awardList li {
+    grid-template-columns: 44px minmax(0, 1fr) auto;
+    column-gap: 14px;
+  }
+  .awardIcon {
+    width: 44px;
+    height: 44px;
+  }
+}

@@ -1,0 +1,386 @@
+/* The art and the ruler share the same progress across the weekend. */
+.run {
+  position: relative;
+  height: 480svh;
+}
+.scene {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+  color: var(--cream);
+  background: #273245;
+}
+[data-tone="scene"] {
+  --scene-ink: var(--cream);
+}
+.plate,
+.plate picture,
+.plate img,
+.cityMotion,
+.sceneShade {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.plate img {
+  object-fit: cover;
+}
+.city-sunset,
+.city-night {
+  opacity: 0;
+}
+.sceneShade {
+  background:
+    linear-gradient(to bottom, rgb(9 18 32 / 0.76), rgb(13 22 36 / 0.56) 21%, transparent 44%),
+    linear-gradient(to top, rgb(9 15 23 / 0.96) 2%, rgb(9 15 23 / 0.85) 22%, transparent 49%);
+}
+.sceneHead {
+  position: absolute;
+  top: max(84px, 11svh);
+  left: var(--margin);
+  width: min(44%, 640px);
+  color: var(--scene-ink, var(--ink));
+  transition: color 0.2s;
+}
+.sceneTitleRow {
+  display: flex;
+  align-items: center;
+  gap: clamp(8px, 1vw, 16px);
+}
+.cityMotionToggle {
+  display: grid;
+  place-items: center;
+  flex: 0 0 36px;
+  height: 36px;
+  padding: 0;
+  color: var(--cream);
+  background: rgb(9 15 23 / 0.32);
+  border: 1px solid rgb(251 244 230 / 0.55);
+  border-radius: 50%;
+  cursor: pointer;
+}
+.cityMotionToggle:is(:hover, :focus-visible) {
+  background: var(--cream);
+  color: var(--ink);
+}
+.sceneCare {
+  max-width: 26em;
+  margin-top: 14px;
+  font-size: 0.84em;
+  line-height: 1.4;
+}
+.sceneCare .textLink {
+  padding-block: 4px;
+}
+.clock {
+  color: var(--scene-ink, var(--ink));
+  transition: color 0.2s;
+  position: absolute;
+  top: max(76px, 10svh);
+  right: var(--margin);
+  display: flex;
+  gap: 0.08em;
+  font: 400 min(10vw, 19svh, 210px) / 1 var(--mono);
+  letter-spacing: -0.06em;
+}
+.clock b {
+  font-weight: 400;
+}
+.clockDigits {
+  line-height: 0.8;
+  font-variant-numeric: tabular-nums;
+}
+.clock span {
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: 0.6em;
+  min-width: 5.6em;
+  font-size: 15px;
+  letter-spacing: -0.02em;
+}
+.clockHalf {
+  font-size: min(3.8vw, 6.4svh, 72px);
+  line-height: 0.8;
+}
+.clockDay {
+  font: 14px/1.2 var(--mono);
+  font-style: normal;
+  text-transform: uppercase;
+}
+.timeline {
+  position: absolute;
+  left: var(--margin);
+  right: var(--margin);
+  bottom: clamp(28px, 5svh, 56px);
+}
+.agendaFocus,
+.agendaControls,
+.agendaArrows,
+.rulerEnds {
+  display: flex;
+  align-items: center;
+}
+.agendaFocus,
+.rulerEnds {
+  justify-content: space-between;
+  gap: var(--gap);
+}
+.agendaFocus {
+  min-height: 104px;
+  align-items: flex-end;
+  margin-bottom: 14px;
+}
+.agendaCurrent strong,
+.agendaList strong {
+  display: block;
+}
+.agendaCurrent strong {
+  margin-top: 5px;
+  font-size: clamp(32px, 3.7vw, 66px);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+}
+.agendaCurrent small,
+.agendaNext small,
+.agendaList small,
+.rulerEnds {
+  font: 13px/1.3 var(--mono);
+}
+.agendaCurrent small {
+  color: var(--pale);
+}
+.agendaCurrent p {
+  margin-top: 6px;
+  font-size: 15px;
+}
+.agendaControls {
+  gap: clamp(16px, 2vw, 36px);
+}
+.agendaNext span {
+  display: block;
+  margin-top: 3px;
+  font-weight: 600;
+}
+.agendaArrows {
+  gap: 8px;
+}
+.agendaArrows button {
+  border: 1px solid rgb(251 244 230 / 0.7);
+  color: var(--cream);
+  border-radius: 50%;
+  background: rgb(9 15 23 / 0.55);
+  width: 44px;
+  height: 44px;
+  font: 22px/1 var(--mono);
+  cursor: pointer;
+}
+.agendaArrows button:hover:enabled,
+.agendaArrows button:focus-visible {
+  background: var(--cream);
+  color: var(--ink);
+}
+.agendaArrows button:disabled {
+  opacity: 0.32;
+  cursor: default;
+}
+.ruler {
+  position: relative;
+  height: 30px;
+  touch-action: pan-y;
+}
+.ticks {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+}
+.ticks:before,
+.ticks:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 14px;
+  height: 2px;
+  background: rgb(251 244 230 / 0.32);
+}
+.ticks:before {
+  right: 0;
+}
+.ticks:after {
+  width: calc(var(--fill, 0) * 100%);
+  background: var(--gold);
+}
+.ticks i {
+  position: absolute;
+  top: 9px;
+  width: 12px;
+  height: 12px;
+  margin-left: -6px;
+  border: 2px solid rgb(251 244 230 / 0.6);
+  border-radius: 50%;
+  background: #1b2328;
+  transition:
+    background-color 0.25s,
+    border-color 0.25s;
+}
+.ticks i[data-past] {
+  border-color: var(--gold);
+  background: var(--gold);
+}
+.ticks em {
+  position: absolute;
+  z-index: 1;
+  top: 8px;
+  left: calc(var(--fill, 0) * 100%);
+  width: 14px;
+  height: 14px;
+  margin-left: -7px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 5px rgb(232 180 74 / 0.25);
+}
+.ruler input {
+  position: absolute;
+  inset: -10px -14px;
+  width: calc(100% + 28px);
+  margin: 0;
+  opacity: 0;
+  cursor: ew-resize;
+}
+.ruler:has(input:focus-visible) .ticks em {
+  outline: 3px solid var(--cream);
+  outline-offset: 5px;
+}
+.agendaList {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+@media (max-height: 700px) {
+  .sceneHead {
+    top: 72px;
+  }
+  .sceneHead .head {
+    font-size: clamp(32px, 3.6vw, 56px);
+  }
+  .sceneCare {
+    display: none;
+  }
+  .clock {
+    top: 68px;
+    font-size: min(8vw, 16svh);
+  }
+
+}
+/* On phones the active milestone occupies one row below the artwork. */
+@media (max-width: 900px) {
+  .scene {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 var(--margin) max(20px, env(safe-area-inset-bottom));
+  }
+  .sceneHead {
+    top: max(68px, 9svh);
+    width: calc(100% - 2 * var(--margin));
+  }
+  .sceneHead .head {
+    font-size: clamp(34px, 7.4vw, 52px);
+  }
+  .sceneCare {
+    display: block;
+    max-width: 26em;
+    font-size: 13px;
+    margin-top: 8px;
+  }
+  .clock {
+    position: relative;
+    inset: auto;
+    margin-bottom: 14px;
+    font-size: clamp(48px, 12vw, 84px);
+  }
+  .clock span {
+    font-size: 14px;
+    gap: 5px;
+    align-self: center;
+  }
+  .clockHalf {
+    font-size: 20px;
+  }
+  .timeline {
+    position: relative;
+    inset: auto;
+  }
+  .agendaFocus {
+    display: grid;
+    min-height: 0;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .agendaCurrent {
+    min-height: 78px;
+  }
+  .agendaCurrent strong {
+    font-size: clamp(28px, 6.5vw, 40px);
+  }
+  .agendaCurrent small, .agendaNext small, .rulerEnds {
+    font-size: 11px;
+  }
+  .agendaControls {
+    justify-content: space-between;
+    min-height: 44px;
+  }
+  .agendaArrows {
+    margin-left: auto;
+  }
+  .agendaNext span, .agendaCurrent p {
+    font-size: 14px;
+  }
+}
+@media (prefers-reduced-motion: reduce), (max-height: 480px) {
+  [data-tone="scene"] {
+    --bar: var(--fog);
+    --bar-ink: var(--ink);
+  }
+  .run, .scene { height: auto; }
+  .scene {
+    position: relative;
+    display: block;
+    padding: clamp(88px, 12svh, 128px) var(--margin) 0;
+    color: var(--ink);
+    background: url("/media/canvas.webp") 0 0 / 96px var(--fog);
+  }
+  .cityMotion, .cityMotionToggle, .sceneShade, .clock, .timeline, .plate picture:not(.city-afternoon) { display: none; }
+  .sceneHead {
+    position: static;
+    width: auto;
+    color: var(--ink);
+  }
+  .sceneCare { display: block; }
+  .agendaList {
+    position: static;
+    width: auto;
+    height: auto;
+    clip-path: none;
+    margin: 32px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .agendaList li {
+    padding: 10px 0;
+    border-top: 1px solid rgb(20 16 11 / 0.25);
+  }
+  .plate {
+    position: relative;
+    width: auto;
+    height: clamp(150px, 26vw, 240px);
+    margin: 0 calc(-1 * var(--margin)) 28px;
+  }
+}

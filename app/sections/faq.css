@@ -1,0 +1,97 @@
+.faq {
+  padding-bottom: clamp(64px, 11svh, 120px);
+}
+.faqGrid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  align-items: start;
+  gap: 40px var(--gap);
+}
+.faqSide {
+  grid-column: 1 / span 5;
+  display: grid;
+  justify-items: start;
+  gap: 18px;
+}
+.faqActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+}
+/* the second button: an outline in the ink of the section */
+.btn.btnLine {
+  background: transparent;
+  color: inherit;
+  box-shadow: inset 0 0 0 2px currentColor;
+}
+.btn.btnLine:hover {
+  background: rgb(20 16 11 / 0.08);
+}
+.faqGrid > .asks {
+  grid-column: 7 / -1;
+}
+.asks details {
+  border-bottom: 1px solid rgb(20 16 11 / 0.24);
+}
+.asks details:first-child {
+  border-top: 1px solid rgb(20 16 11 / 0.24);
+}
+.asks summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 22px 0;
+  font-size: clamp(20px, 1.8vw, 27px);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.018em;
+  list-style: none;
+  cursor: pointer;
+}
+.asks summary::-webkit-details-marker {
+  display: none;
+}
+/* a plus that turns into a minus */
+.asks summary:after {
+  content: "";
+  flex: none;
+  width: 16px;
+  height: 16px;
+  background:
+    linear-gradient(currentColor, currentColor) center / 100% 2px no-repeat,
+    linear-gradient(currentColor, currentColor) center / 2px 100% no-repeat;
+  transition: background-size 0.2s;
+}
+.asks details[open] summary:after {
+  background-size:
+    100% 2px,
+    2px 0;
+}
+.asks details p {
+  max-width: 38em;
+  padding: 0 0 24px;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .asks details[open] p {
+    animation: ask-in 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+}
+@keyframes ask-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+@media (max-width: 900px) {
+  .faqSide,
+  .faqGrid > .asks {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 560px) {
+  .faqActions .btn {
+    flex: 1 1 100%;
+  }
+}

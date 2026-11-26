@@ -1,0 +1,183 @@
+.about {
+  --tag: min(21.25vw, 35svh, 400px);
+  --drop: 100px;
+  /* the stats bar closes the section */
+  padding-bottom: 0;
+}
+/* Fog rolls in over the bottom of the hero as you leave it. Invisible while the hero is at rest. */
+.fogbank {
+  position: absolute;
+  inset: auto 0 100%;
+  height: 46svh;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(transparent, rgb(213 218 214 / 0.5) 45%, var(--fog));
+}
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .fogbank {
+      animation: fog-in linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 45svh;
+    }
+  }
+}
+@keyframes fog-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.aboutGrid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(40px, 6.5svh, 72px) var(--gap);
+  padding-bottom: clamp(32px, 4.4svh, 56px);
+}
+.aboutHead {
+  grid-column: 1 / span 8;
+  align-self: center;
+  display: grid;
+  gap: clamp(20px, 3svh, 32px);
+}
+.about .head {
+  max-width: 12em;
+  font-size: clamp(38px, 4.8vw, 86px);
+}
+.about .lead {
+  max-width: 24em;
+  font-size: clamp(20px, 1.8vw, 30px);
+  font-weight: 400;
+  line-height: 1.4;
+}
+/* the tag hangs over the last step, on the same left edge */
+.aboutTag {
+  grid-column: 10 / span 3;
+  justify-self: start;
+  /* the strap starts just under the bar */
+  margin-top: calc(clamp(92px, 14.2svh, 140px) * -1 + 56px);
+}
+.steps {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.step {
+  position: relative;
+}
+.stepIcon {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: var(--gold);
+}
+.stepIcon svg {
+  width: 32px;
+  height: 32px;
+}
+/* the line from each step to the next */
+.step:not(:last-child):after {
+  content: "";
+  position: absolute;
+  left: 64px;
+  right: calc(12px - var(--gap));
+  top: 25px;
+  height: 2px;
+  background: rgb(20 16 11 / 0.2);
+}
+.step h3 {
+  margin-top: 18px;
+  font-size: clamp(21px, 1.7vw, 28px);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+.step p {
+  max-width: 19em;
+  margin-top: 6px;
+  text-wrap: pretty;
+}
+.statsBar {
+  position: relative;
+  background: url("/media/canvas.webp") 0 0 / 96px var(--gold);
+}
+/* first and last sit on the section's own edges */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(5, auto);
+  justify-content: space-between;
+  gap: 14px var(--gap);
+  margin-block: 0;
+  padding-block: 20px;
+  list-style: none;
+  font-weight: 500;
+  line-height: 1.2;
+}
+.stats li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 10px;
+}
+.stats strong {
+  font-size: clamp(30px, 2.9vw, 52px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+@media (max-width: 900px) {
+  .about {
+    --tag: min(64vw, 300px);
+    --drop: 110px;
+  }
+  .aboutGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .aboutHead,
+  .aboutTag,
+  .steps {
+    grid-column: 1;
+  }
+  .aboutTag {
+    order: 1;
+    justify-self: center;
+    margin-top: 0;
+  }
+  .steps {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+  .step {
+    display: grid;
+    grid-template-columns: 52px minmax(0, 1fr);
+    column-gap: 18px;
+  }
+  .stepIcon {
+    grid-row: 1 / span 2;
+  }
+  .step:not(:last-child):after {
+    left: 25px;
+    right: auto;
+    top: 60px;
+    bottom: -20px;
+    width: 2px;
+    height: auto;
+  }
+  .step h3 {
+    margin-top: 2px;
+  }
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .stats li:last-child {
+    grid-column: 1 / -1;
+  }
+}
